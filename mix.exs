@@ -1,7 +1,7 @@
 defmodule Kadabra.Mixfile do
   use Mix.Project
 
-  @version "0.6.1"
+  @version "0.6.2"
 
   def project do
     [
@@ -12,7 +12,7 @@ defmodule Kadabra.Mixfile do
       description: description(),
       dialyzer: dialyzer(),
       docs: docs(),
-      elixir: "~> 1.6",
+      elixir: "~> 1.18",
       elixirc_options: [warnings_as_errors: true],
       name: "Kadabra",
       package: package(),
@@ -45,10 +45,10 @@ defmodule Kadabra.Mixfile do
   defp deps do
     [
       {:certifi, "~> 2.5"},
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.7", only: :test, runtime: false},
+      {:excoveralls, "~> 0.18", only: :test, runtime: false},
       {:hpack, "~> 0.3.0", hex: :hpack_erl}
     ]
   end

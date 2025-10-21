@@ -173,8 +173,9 @@ defmodule Kadabra.Connection.Processor do
     {:connection_error, :FRAME_SIZE_ERROR, reason, state}
   end
 
-  def process(%Ping{ack: false}, %{config: config} = state) do
-    Kernel.send(config.client, {:ping, self()})
+  def process(%Ping{ack: false} = ping, %{config: config} = state) do
+    # Automatically respond to server pings with ACK
+    Egress.send_ping_ack(config.socket, ping)
     {:ok, state}
   end
 

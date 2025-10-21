@@ -30,6 +30,11 @@ defmodule Kadabra.Connection.Egress do
     Socket.send(socket, bin)
   end
 
+  def send_ping_ack(socket, %Ping{} = ping) do
+    bin = Ping.ack(ping) |> Encodable.to_bin()
+    Socket.send(socket, bin)
+  end
+
   def send_local_settings(socket, settings) do
     bin =
       %Frame.Settings{settings: settings}

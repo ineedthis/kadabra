@@ -2,7 +2,8 @@ defmodule Kadabra.Socket do
   @moduledoc false
 
   defstruct socket: nil, buffer: "", active_user: nil
-  defguardp is_ssl_socket(s) when is_tuple(s) and elem(s, 0) == :sslsocket
+  # OTP 28 changed sslsocket from 3-tuple to 8-tuple, so we check flexibly
+  defguardp is_ssl_socket(s) when is_tuple(s) and tuple_size(s) > 0 and elem(s, 0) == :sslsocket
 
   alias Kadabra.FrameParser
 
@@ -10,7 +11,8 @@ defmodule Kadabra.Socket do
 
   use GenServer
 
-  @type ssl_sock :: {:sslsocket, any, pid | {any, any}}
+  # SSL socket can be 3-tuple (OTP 27) or 8-tuple (OTP 28+)
+  @type ssl_sock :: tuple()
 
   @type connection_result ::
           {:ok, ssl_sock}

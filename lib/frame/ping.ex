@@ -54,4 +54,22 @@ defmodule Kadabra.Frame.Ping do
   @spec ack?(non_neg_integer) :: boolean
   defp ack?(flags) when (flags &&& 1) == 1, do: true
   defp ack?(_), do: false
+
+  @doc ~S"""
+  Creates a PING ACK response with the given data.
+
+  ## Examples
+
+      iex> ping = %Kadabra.Frame.Ping{data: <<1, 2, 3, 4, 5, 6, 7, 8>>, ack: false}
+      iex> Kadabra.Frame.Ping.ack(ping)
+      %Kadabra.Frame.Ping{data: <<1, 2, 3, 4, 5, 6, 7, 8>>, ack: true, stream_id: 0}
+  """
+  @spec ack(t) :: t
+  def ack(%__MODULE__{data: data}) do
+    %__MODULE__{
+      ack: true,
+      data: data,
+      stream_id: 0
+    }
+  end
 end
